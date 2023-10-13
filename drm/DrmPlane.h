@@ -39,6 +39,13 @@ class DrmPlane : public PipelineBindable<DrmPlane> {
   static auto CreateInstance(DrmDevice &dev, uint32_t plane_id)
       -> std::unique_ptr<DrmPlane>;
 
+  static uint64_t drm_mode_reflect_x;
+  static uint64_t drm_mode_reflect_y;
+  static uint64_t drm_mode_rotate_90;
+  static uint64_t drm_mode_rotate_180;
+  static uint64_t drm_mode_rotate_270;
+  static uint64_t drm_mode_rotate_0;
+
   bool IsCrtcSupported(const DrmCrtc &crtc) const;
   bool IsValidForLayer(LayerData *layer);
 

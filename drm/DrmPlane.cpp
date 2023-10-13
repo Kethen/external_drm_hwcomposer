@@ -29,6 +29,14 @@
 
 namespace android {
 
+uint64_t DrmPlane::drm_mode_reflect_x = DRM_MODE_REFLECT_X;
+uint64_t DrmPlane::drm_mode_reflect_y = DRM_MODE_REFLECT_Y;
+uint64_t DrmPlane::drm_mode_rotate_90 = DRM_MODE_ROTATE_90;
+uint64_t DrmPlane::drm_mode_rotate_180 = DRM_MODE_ROTATE_180;
+uint64_t DrmPlane::drm_mode_rotate_270 = DRM_MODE_ROTATE_270;
+uint64_t DrmPlane::drm_mode_rotate_0 = DRM_MODE_ROTATE_0;
+
+
 auto DrmPlane::CreateInstance(DrmDevice &dev, uint32_t plane_id)
     -> std::unique_ptr<DrmPlane> {
   auto p = MakeDrmModePlaneUnique(dev.GetFd(), plane_id);
@@ -201,17 +209,17 @@ bool DrmPlane::HasNonRgbFormat() const {
 static uint64_t ToDrmRotation(LayerTransform transform) {
   uint64_t rotation = 0;
   if ((transform & LayerTransform::kFlipH) != 0)
-    rotation |= DRM_MODE_REFLECT_X;
+    rotation |= DrmPlane::drm_mode_reflect_x;
   if ((transform & LayerTransform::kFlipV) != 0)
-    rotation |= DRM_MODE_REFLECT_Y;
+    rotation |= DrmPlane::drm_mode_reflect_y;
   if ((transform & LayerTransform::kRotate90) != 0)
-    rotation |= DRM_MODE_ROTATE_90;
+    rotation |= DrmPlane::drm_mode_rotate_90;
   else if ((transform & LayerTransform::kRotate180) != 0)
-    rotation |= DRM_MODE_ROTATE_180;
+    rotation |= DrmPlane::drm_mode_rotate_180;
   else if ((transform & LayerTransform::kRotate270) != 0)
-    rotation |= DRM_MODE_ROTATE_270;
+    rotation |= DrmPlane::drm_mode_rotate_270;
   else
-    rotation |= DRM_MODE_ROTATE_0;
+    rotation |= DrmPlane::drm_mode_rotate_0;
 
   return rotation;
 }

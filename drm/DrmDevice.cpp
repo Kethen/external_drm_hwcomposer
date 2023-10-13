@@ -172,6 +172,14 @@ auto DrmDevice::Init(const char *path) -> int {
     }
   }
 
+  // initialize prop based rotations for DrmPlane
+  DrmPlane::drm_mode_reflect_x = property_get_int64("hwc.drm.reflect_x", DRM_MODE_REFLECT_X);
+  DrmPlane::drm_mode_reflect_y = property_get_int64("hwc.drm.reflect_y", DRM_MODE_REFLECT_Y);
+  DrmPlane::drm_mode_rotate_90 = property_get_int64("hwc.drm.rotate_90", DRM_MODE_ROTATE_90);
+  DrmPlane::drm_mode_rotate_180 = property_get_int64("hwc.drm.rotate_180", DRM_MODE_ROTATE_180);
+  DrmPlane::drm_mode_rotate_270 = property_get_int64("hwc.drm.rotate_270", DRM_MODE_ROTATE_270);
+  DrmPlane::drm_mode_rotate_0 = property_get_int64("hwc.drm.rotate_0", DRM_MODE_ROTATE_0);
+
   return 0;
 }
 
